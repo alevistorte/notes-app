@@ -3,11 +3,13 @@ import { AuthScreen } from "../auth/AuthScreen";
 import { LoginScreen } from "../auth/LoginScreen";
 import { RegisterScreen } from "../auth/RegisterScreen";
 import { JournalScreen } from "../journal/JournalScreen";
+import { PrivateRoutes } from "./PrivateRoutes";
+import { PublicRoutes } from "./PublicRoutes";
 
 export const router = createBrowserRouter([
   {
     path: "/auth/",
-    element: <AuthScreen />,
+    element: <PublicRoutes />,
     children: [
       {
         index: true,
@@ -29,7 +31,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <JournalScreen />,
+    element: <PrivateRoutes />,
     errorElement: <Navigate to={"/auth/login"} />,
   },
 ]);
