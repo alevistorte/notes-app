@@ -6,6 +6,7 @@ import {
   auth,
 } from "../firebase/firebase-config";
 import { types } from "../types/types";
+import { noteLogout } from "./notes";
 
 export const startLoginEmailPass = (email, password) => {
   return (dispatch) => {
@@ -73,6 +74,7 @@ export const startLogout = () => {
   return async (dispatch) => {
     await firebase.signOut(auth);
     dispatch(logout());
+    dispatch(noteLogout());
   };
 };
 

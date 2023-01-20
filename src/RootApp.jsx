@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 
 import { login } from "./actions/auth";
+import { startLoadingNotes } from "./actions/notes";
 import { firebase, auth } from "./firebase/firebase-config";
 
 export const RootApp = ({ router }) => {
@@ -12,9 +13,10 @@ export const RootApp = ({ router }) => {
 
   // getting credentials
   useEffect(() => {
-    firebase.onAuthStateChanged(auth, (user) => {
+    firebase.onAuthStateChanged(auth, async (user) => {
       if (user) {
         dispatch(login(user.uid, user.displayName));
+        dispatch(startLoadingNotes(user.uid));
       }
 
       setChecking(false);
@@ -22,7 +24,7 @@ export const RootApp = ({ router }) => {
   }, [dispatch, setChecking]);
 
   if (checking) {
-    return <h1>Espere...</h1>;
+    return <h1>Wait...</h1>;
   }
 
   return <RouterProvider router={router} />;
